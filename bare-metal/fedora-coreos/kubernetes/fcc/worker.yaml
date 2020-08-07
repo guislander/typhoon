@@ -122,7 +122,7 @@ storage:
 passwd:
   users:
     - name: core
-      uid: 555
+      uid: 1555
       ssh_authorized_keys:
         - ${ssh_authorized_key}
 
