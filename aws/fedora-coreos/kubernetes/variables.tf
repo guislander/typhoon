@@ -43,8 +43,13 @@ variable "worker_type" {
 
 variable "os_stream" {
   type        = string
-  description = "Fedora CoreOs image stream for instances (e.g. stable, testing, next)"
+  description = "Fedora CoreOS image stream for instances (e.g. stable, testing, next)"
   default     = "stable"
+
+  validation {
+    condition = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "disk_size" {
@@ -94,12 +99,6 @@ variable "worker_snippets" {
 variable "ssh_authorized_key" {
   type        = string
   description = "SSH public key for user 'core'"
-}
-
-variable "asset_dir" {
-  type        = string
-  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
-  default     = ""
 }
 
 variable "networking" {
@@ -159,5 +158,22 @@ variable "cluster_domain_suffix" {
   type        = string
   description = "Queries for domains with the suffix will be answered by CoreDNS. Default is cluster.local (e.g. foo.default.svc.cluster.local)"
   default     = "cluster.local"
+}
+
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+
+  validation {
+    condition = var.arch == "amd64" || var.arch == "arm64"
+    error_message = "The arch must be amd64 or arm64."
+  }
+}
+
+variable "daemonset_tolerations" {
+  type        = list(string)
+  description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"
+  default     = []
 }
 

@@ -38,13 +38,11 @@ variable "os_stream" {
   type        = string
   description = "Fedora CoreOS stream for compute instances (e.g. stable, testing, next)"
   default     = "stable"
-}
 
-# Deprecated
-variable "os_image" {
-  type        = string
-  description = "Fedora CoreOS image for compute instances (e.g. fedora-coreos)"
-  default     = ""
+  validation {
+    condition = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "disk_size" {

@@ -64,7 +64,22 @@ Two tag styles indicate the build strategy used.
 * Typhoon internal infra publishes single and multi-arch images (e.g. `v1.18.4`, `v1.18.4-amd64`, `v1.18.4-arm64`, `v1.18.4-2-g23228e6-amd64`, `v1.18.4-2-g23228e6-arm64`)
 * Quay and Dockerhub automated builds publish verifiable images (e.g. `build-SHA` on Quay, `build-TAG` on Dockerhub)
 
-The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#kubelet).
+The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#system-images).
+
+### flannel-cni
+
+Typhoon packages the [flannel-cni](https://github.com/poseidon/flannel-cni) container image to provide security patches.
+
+* [quay.io/poseidon/flannel-cni](https://quay.io/repository/poseidon/flannel-cni) (official)
+
+## Terraform Providers
+
+Typhoon publishes Terraform providers to the Terraform Registry, GPG signed by 0x8F515AD1602065C8.
+
+| Name     | Source | Registry |
+|----------|--------|----------|
+| ct       | [github](https://github.com/poseidon/terraform-provider-ct) | [poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest) |
+| matchbox | [github](https://github.com/poseidon/terraform-provider-matchbox) | [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest) |
 
 ## Disclosures
 
