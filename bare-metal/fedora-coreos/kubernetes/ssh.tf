@@ -24,7 +24,6 @@ resource "null_resource" "copy-controller-secrets" {
     host    = var.controllers.*.domain[count.index]
     user    = "core"
     timeout = "60m"
-    agent = false
   }
 
   provisioner "file" {
@@ -61,7 +60,6 @@ resource "null_resource" "copy-worker-secrets" {
     host    = var.workers.*.domain[count.index]
     user    = "core"
     timeout = "60m"
-    agent = false
   }
 
   provisioner "file" {
@@ -91,7 +89,6 @@ resource "null_resource" "bootstrap" {
     host    = var.controllers[0].domain
     user    = "core"
     timeout = "15m"
-    agent = false
   }
 
   provisioner "remote-exec" {
