@@ -38,7 +38,7 @@ resource "matchbox_profile" "controllers" {
   initrd = [
     local.initrd
   ]
-  args = concat(local.args, "coreos.inst.install_dev=${var.install_disk[count.index]}", var.kernel_args)
+  args = concat(local.args, "coreos.inst.install_dev=${var.controllers.*.install_dev[count.index]}", var.kernel_args)
 
   raw_ignition = data.ct_config.controller-ignitions.*.rendered[count.index]
 }
