@@ -7,7 +7,6 @@ locals {
     "initrd=fedora-coreos-${var.os_version}-live-initramfs.x86_64.img",
     "coreos.inst.image_url=https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-metal.x86_64.raw.xz",
     "coreos.inst.ignition_url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
-    "coreos.inst.install_dev=${var.install_disk}",
     "console=tty0",
     "console=ttyS0",
   ]
@@ -20,7 +19,6 @@ locals {
     "initrd=fedora-coreos-${var.os_version}-live-initramfs.x86_64.img",
     "coreos.inst.image_url=${var.matchbox_http_endpoint}/assets/fedora-coreos/fedora-coreos-${var.os_version}-metal.x86_64.raw.xz",
     "coreos.inst.ignition_url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
-    "coreos.inst.install_dev=${var.install_disk}",
     "console=tty0",
     "console=ttyS0",
   ]
@@ -40,7 +38,7 @@ resource "matchbox_profile" "controllers" {
   initrd = [
     local.initrd
   ]
-  args = concat(local.args, var.kernel_args)
+  args = concat(local.args, "coreos.inst.install_dev=${var.install_disk[count.index]}", var.kernel_args)
 
   raw_ignition = data.ct_config.controller-ignitions.*.rendered[count.index]
 }
@@ -76,7 +74,7 @@ resource "matchbox_profile" "workers" {
   initrd = [
     local.initrd
   ]
-  args = concat(local.args, var.kernel_args)
+  args = concat(local.args, "coreos.inst.install_dev=${var.install_disk[count.index]}", var.kernel_args)
 
   raw_ignition = data.ct_config.worker-ignitions.*.rendered[count.index]
 }

@@ -127,9 +127,8 @@ variable "cached_install" {
 }
 
 variable "install_disk" {
-  type        = string
+  type        = list(string)
   description = "Disk device to install Fedora CoreOS (e.g. sda)"
-  default     = "sda"
 }
 
 variable "kernel_args" {
